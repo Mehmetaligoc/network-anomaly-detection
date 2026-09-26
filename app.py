@@ -4,7 +4,7 @@ import os
 os.environ.setdefault('TF_CPP_MIN_LOG_LEVEL', '2')
 import pandas as pd
 import streamlit as st
-from ids.schema import FEATURES, InputError, read_upload
+from ids.schema import FEATURES, InputError, read_upload, balanced_labeled_sample
 from ids.pipeline import load_bundle, score_frame, classify, sha256
 from ids.metrics import binary_metrics
 
@@ -34,6 +34,13 @@ def get_scores(frame, manifest_hash, _bundle):
     return score_frame(_bundle, frame)
 
 
+@st.cache_data(show_spinner=False)
+def get_download_example(content):
+    frame = read_upload(content)
+    sample = balanced_labeled_sample(frame, per_class=5)
+    return sample.to_csv(index=False).encode('utf-8-sig')
+
+
 def show_result(frame, threshold, bundle, manifest_hash, prefix):
     try:
         with st.spinner('Kayıtlar değerlendiriliyor…'):
@@ -53,7 +60,8 @@ def show_result(frame, threshold, bundle, manifest_hash, prefix):
                 value = metrics[key]
                 col.metric(label, 'Tanımsız' if value is None else f'%{value*100:.2f}')
             st.caption('Ölçümler yalnızca yüklenen dosya ve seçili eşik için geçerlidir. '
-                       'Etiketler: 0 normal, 1 saldırı. Tanımsız ölçümlerde ilgili payda sıfırdır.')
+                       'Etiketler: 0 normal, 1 saldırı. Tanımsız ölçümlerde ilgili payda sıfırdır; '
+                       'örneğin dosyada saldırı yoksa yakalama oranı hesaplanamaz.')
             st.dataframe(pd.DataFrame([[metrics['TN'], metrics['FP']], [metrics['FN'], metrics['TP']]],
                     index=['Gerçek normal', 'Gerçek saldırı'], columns=['Eşik altında', 'Anomali']))
         result = frame.copy()
@@ -92,8 +100,11 @@ with st.sidebar:
 csv_tab, single_tab = st.tabs(['CSV Analizi', 'Tek Kayıt'])
 with csv_tab:
     source = st.radio('Veri kaynağı', ['CSV yükle', 'Örnek test dosyası'], horizontal=True)
-    st.download_button('41 özellikli örnek CSV indir',
-        (ROOT / 'data/examples/tek_normal.csv').read_bytes(), file_name='ornek_41_ozellik.csv', mime='text/csv')
+    example_download = get_download_example((ROOT / 'data/examples/test_ornegi_5000.csv').read_bytes())
+    st.download_button('Dengeli 41 özellikli örnek CSV indir', example_download,
+        file_name='ornek_41_ozellik_dengeli.csv', mime='text/csv')
+    st.caption('İndirilen dosya 5 normal ve 5 saldırı kaydı içerir. Böylece sınıfa bağlı ölçümler '
+               'tek kayıtlık örneklere göre daha anlamlı biçimde hesaplanabilir.')
     content = None
     if source == 'Örnek test dosyası':
         st.caption('KDDTest+ içinden sabit tohumla seçilmiş 5.000 kayıt. '
