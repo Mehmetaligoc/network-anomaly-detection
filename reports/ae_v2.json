@@ -1,1 +1,313 @@
-
+{
+  "manifest": {
+    "schema_version": 1,
+    "version": "ae_v2",
+    "features": [
+      "duration",
+      "protocol_type",
+      "service",
+      "flag",
+      "src_bytes",
+      "dst_bytes",
+      "land",
+      "wrong_fragment",
+      "urgent",
+      "hot",
+      "num_failed_logins",
+      "logged_in",
+      "num_compromised",
+      "root_shell",
+      "su_attempted",
+      "num_root",
+      "num_file_creations",
+      "num_shells",
+      "num_access_files",
+      "num_outbound_cmds",
+      "is_host_login",
+      "is_guest_login",
+      "count",
+      "srv_count",
+      "serror_rate",
+      "srv_serror_rate",
+      "rerror_rate",
+      "srv_rerror_rate",
+      "same_srv_rate",
+      "diff_srv_rate",
+      "srv_diff_host_rate",
+      "dst_host_count",
+      "dst_host_srv_count",
+      "dst_host_same_srv_rate",
+      "dst_host_diff_srv_rate",
+      "dst_host_same_src_port_rate",
+      "dst_host_srv_diff_host_rate",
+      "dst_host_serror_rate",
+      "dst_host_srv_serror_rate",
+      "dst_host_rerror_rate",
+      "dst_host_srv_rerror_rate"
+    ],
+    "encoded_features": 77,
+    "parameters": 15261,
+    "threshold": 0.014422446450256145,
+    "threshold_method": "95th percentile of normal calibration rows; numpy method=higher",
+    "seed": 42,
+    "created_utc": "2026-09-25T12:44:08.167042+00:00",
+    "train_source_sha256": "1b86d2f957b33082081bba410fe129b475efebcc13c9014c3f447c8271aadf95",
+    "split_counts": {
+      "train": 100778,
+      "validation": 12597,
+      "calibration": 12598,
+      "ae_train_normal": 53874,
+      "ae_validation_normal": 6734,
+      "ae_calibration_normal": 6735
+    },
+    "versions": {
+      "python": "3.12.14",
+      "tensorflow": "2.20.0",
+      "sklearn": "1.6.1",
+      "numpy": "2.2.6",
+      "pandas": "2.2.3"
+    },
+    "sha256": {
+      "model.keras": "ca98c5ce51716c22f32f3eeaea919e2e215944eabb65bb45d7c60a841dc463d9",
+      "preprocessor.joblib": "a2f667a89097438c5c95f9547d88776f50d815fef959d267d0de11454c6df6b7"
+    }
+  },
+  "test_source_sha256": "fa46b0935342616aa83b7c2578db355b6a7aaabbc492248172c7a1e8b7ab8f84",
+  "epochs_run": 20,
+  "best_epoch": 20,
+  "history": {
+    "loss": [
+      0.05294938012957573,
+      0.013070845045149326,
+      0.008348974399268627,
+      0.006980591453611851,
+      0.006282643880695105,
+      0.005699468310922384,
+      0.005242418497800827,
+      0.004821338225156069,
+      0.004442720208317041,
+      0.0041728634387254715,
+      0.004001195076853037,
+      0.003862098790705204,
+      0.0037470150273293257,
+      0.003641038201749325,
+      0.0035348625387996435,
+      0.003441049251705408,
+      0.0033702021464705467,
+      0.00329372426494956,
+      0.003261352190747857,
+      0.003189937211573124
+    ],
+    "val_loss": [
+      0.016092555597424507,
+      0.008426107466220856,
+      0.006394709926098585,
+      0.005699646659195423,
+      0.005068155005574226,
+      0.004545754753053188,
+      0.004209023434668779,
+      0.0037840993609279394,
+      0.003452964359894395,
+      0.003313105320557952,
+      0.003319166135042906,
+      0.0031775508541613817,
+      0.00309909344650805,
+      0.0029843775555491447,
+      0.0028631030581891537,
+      0.002815587678924203,
+      0.002737347735092044,
+      0.0026873911265283823,
+      0.0027456714306026697,
+      0.002607619157060981
+    ]
+  },
+  "autoencoder": {
+    "threshold": 0.014422446450256145,
+    "rows": 22544,
+    "accuracy": 0.8755322924059616,
+    "precision": 0.9174785577483554,
+    "recall": 0.8585677550066235,
+    "f1": 0.8870461315514049,
+    "fpr": 0.10204922253115024,
+    "TN": 8720,
+    "FP": 991,
+    "FN": 1815,
+    "TP": 11018,
+    "roc_auc": 0.9323715408019897,
+    "average_precision": 0.9257917372885163
+  },
+  "random_forest": {
+    "rows": 22544,
+    "accuracy": 0.7737757274662882,
+    "precision": 0.9688371529040863,
+    "recall": 0.6226135743785552,
+    "f1": 0.7580645161290323,
+    "fpr": 0.026464833693749357,
+    "TN": 9454,
+    "FP": 257,
+    "FN": 4843,
+    "TP": 7990,
+    "roc_auc": 0.9594106424679711,
+    "average_precision": 0.9611825057259298
+  },
+  "warnings": [
+    "service: e\u011fitimde g\u00f6r\u00fclmeyen kategori i\u00e7eren 1343 kay\u0131t var (ldap, courier, discard, mtp, systat). Bu kategorilerin one-hot alanlar\u0131 s\u0131f\u0131rd\u0131r; sonu\u00e7lar\u0131 ek incelemeyle de\u011ferlendirin.",
+    "flag: e\u011fitimde g\u00f6r\u00fclmeyen kategori i\u00e7eren 2 kay\u0131t var (RSTOS0). Bu kategorilerin one-hot alanlar\u0131 s\u0131f\u0131rd\u0131r; sonu\u00e7lar\u0131 ek incelemeyle de\u011ferlendirin."
+  ],
+  "baseline_warnings": [],
+  "calibration_observed_fpr": 0.049888641425389756,
+  "per_label": {
+    "apache2": {
+      "rows": 737,
+      "flagged_fraction": 0.9972862957937585
+    },
+    "back": {
+      "rows": 359,
+      "flagged_fraction": 0.14763231197771587
+    },
+    "buffer_overflow": {
+      "rows": 20,
+      "flagged_fraction": 0.35
+    },
+    "ftp_write": {
+      "rows": 3,
+      "flagged_fraction": 0.3333333333333333
+    },
+    "guess_passwd": {
+      "rows": 1231,
+      "flagged_fraction": 0.8505280259951259
+    },
+    "httptunnel": {
+      "rows": 133,
+      "flagged_fraction": 0.8571428571428571
+    },
+    "imap": {
+      "rows": 1,
+      "flagged_fraction": 1.0
+    },
+    "ipsweep": {
+      "rows": 141,
+      "flagged_fraction": 0.375886524822695
+    },
+    "land": {
+      "rows": 7,
+      "flagged_fraction": 1.0
+    },
+    "loadmodule": {
+      "rows": 2,
+      "flagged_fraction": 1.0
+    },
+    "mailbomb": {
+      "rows": 293,
+      "flagged_fraction": 0.04778156996587031
+    },
+    "mscan": {
+      "rows": 996,
+      "flagged_fraction": 0.9477911646586346
+    },
+    "multihop": {
+      "rows": 18,
+      "flagged_fraction": 0.4444444444444444
+    },
+    "named": {
+      "rows": 17,
+      "flagged_fraction": 0.4117647058823529
+    },
+    "neptune": {
+      "rows": 4657,
+      "flagged_fraction": 0.999785269486794
+    },
+    "nmap": {
+      "rows": 73,
+      "flagged_fraction": 1.0
+    },
+    "normal": {
+      "rows": 9711,
+      "flagged_fraction": 0.10204922253115024
+    },
+    "perl": {
+      "rows": 2,
+      "flagged_fraction": 1.0
+    },
+    "phf": {
+      "rows": 2,
+      "flagged_fraction": 0.0
+    },
+    "pod": {
+      "rows": 41,
+      "flagged_fraction": 0.926829268292683
+    },
+    "portsweep": {
+      "rows": 157,
+      "flagged_fraction": 1.0
+    },
+    "processtable": {
+      "rows": 685,
+      "flagged_fraction": 0.9357664233576642
+    },
+    "ps": {
+      "rows": 15,
+      "flagged_fraction": 0.26666666666666666
+    },
+    "rootkit": {
+      "rows": 13,
+      "flagged_fraction": 0.23076923076923078
+    },
+    "saint": {
+      "rows": 319,
+      "flagged_fraction": 0.8808777429467085
+    },
+    "satan": {
+      "rows": 735,
+      "flagged_fraction": 0.8748299319727891
+    },
+    "sendmail": {
+      "rows": 14,
+      "flagged_fraction": 0.2857142857142857
+    },
+    "smurf": {
+      "rows": 665,
+      "flagged_fraction": 0.8135338345864662
+    },
+    "snmpgetattack": {
+      "rows": 178,
+      "flagged_fraction": 0.6348314606741573
+    },
+    "snmpguess": {
+      "rows": 331,
+      "flagged_fraction": 0.9969788519637462
+    },
+    "sqlattack": {
+      "rows": 2,
+      "flagged_fraction": 1.0
+    },
+    "teardrop": {
+      "rows": 12,
+      "flagged_fraction": 1.0
+    },
+    "udpstorm": {
+      "rows": 2,
+      "flagged_fraction": 1.0
+    },
+    "warezmaster": {
+      "rows": 944,
+      "flagged_fraction": 0.534957627118644
+    },
+    "worm": {
+      "rows": 2,
+      "flagged_fraction": 0.0
+    },
+    "xlock": {
+      "rows": 9,
+      "flagged_fraction": 0.5555555555555556
+    },
+    "xsnoop": {
+      "rows": 4,
+      "flagged_fraction": 0.75
+    },
+    "xterm": {
+      "rows": 13,
+      "flagged_fraction": 0.7692307692307693
+    }
+  }
+}
