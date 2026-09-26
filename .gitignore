@@ -1,0 +1,17 @@
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.env
+.env.*
+.streamlit/secrets.toml
+data/raw/*
+!data/raw/.gitkeep
+data/examples/*
+!data/examples/.gitkeep
+models/*/split_indices.npz
+*.log
+anomali_sonuclari*.csv
+.DS_Store
+Thumbs.db
