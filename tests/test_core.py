@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 import pytest
-from ids.schema import FEATURES, NUMERIC, InputError, validate_features, read_upload, validate_labels
+from ids.schema import (FEATURES, NUMERIC, InputError, validate_features, read_upload,
+                        validate_labels, balanced_labeled_sample)
 from ids.pipeline import make_preprocessor, transform_frame, classify, reconstruction_errors
 from ids.metrics import binary_metrics, calibrate_threshold
 
@@ -83,3 +84,17 @@ def test_empty_and_extra_columns(frame):
     frame['accidental_column'] = 1
     with pytest.raises(InputError):
         validate_features(frame)
+
+
+def test_balanced_labeled_sample_contains_both_classes(frame):
+    normal = frame.assign(True_Class=0)
+    attack = frame.assign(True_Class=1, service='private', flag='S0')
+    source = pd.concat([normal] * 3 + [attack] * 3, ignore_index=True)
+    sample = balanced_labeled_sample(source, per_class=2)
+    assert sample.True_Class.tolist() == [0, 1, 0, 1]
+    assert list(sample.columns) == FEATURES + ['True_Class']
+
+
+def test_balanced_labeled_sample_rejects_single_class(frame):
+    with pytest.raises(InputError, match='normal ve 2 saldırı'):
+        balanced_labeled_sample(pd.concat([frame.assign(True_Class=0)] * 2), per_class=2)
