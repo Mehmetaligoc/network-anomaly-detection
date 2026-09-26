@@ -94,6 +94,22 @@ def validate_labels(labels, length: int | None = None) -> np.ndarray:
     return values.astype(np.int8)
 
 
+def balanced_labeled_sample(data: pd.DataFrame, per_class: int = 5) -> pd.DataFrame:
+    """Return a small labeled sample that can produce meaningful demo metrics."""
+    validate_features(data)
+    if 'True_Class' not in data:
+        raise InputError('Dengeli örnek için True_Class sütunu gerekli.')
+    labels = validate_labels(data['True_Class'], len(data))
+    if not isinstance(per_class, int) or isinstance(per_class, bool) or per_class < 1:
+        raise InputError('Her sınıf için pozitif bir tam sayı gerekli.')
+    normal = data.loc[labels == 0, FEATURES + ['True_Class']].head(per_class)
+    attack = data.loc[labels == 1, FEATURES + ['True_Class']].head(per_class)
+    if len(normal) < per_class or len(attack) < per_class:
+        raise InputError(f'Dengeli örnek için en az {per_class} normal ve {per_class} saldırı kaydı gerekli.')
+    rows = [part.iloc[[index]] for index in range(per_class) for part in (normal, attack)]
+    return pd.concat(rows, ignore_index=True)
+
+
 def read_upload(content: bytes) -> pd.DataFrame:
     if len(content) > MAX_UPLOAD_BYTES:
         raise InputError('Dosya 25 MB sınırını aşıyor.')
